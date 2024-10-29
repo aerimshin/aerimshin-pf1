@@ -191,14 +191,6 @@ body section.first_slide div.left_section .content_1 .evt_level_list li .evt_bor
   top: 0;
   animation: spin 2s infinite linear;
 }
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 body section.first_slide div.left_section .content_1 .evt_level_list li .evt_data {
   width: 68px;
   height: 68px;
@@ -539,14 +531,6 @@ body section.second_slide .top_section .content.content_8 .evt_level_list li .ev
   top: 0;
   animation: spin 2s infinite linear;
 }
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 body section.second_slide .top_section .content.content_8 .evt_level_list li .evt_data {
   width: 105px;
   height: 105px;
@@ -581,14 +565,6 @@ body section.second_slide .top_section .content.content_8 .evt_level_list li.evt
 }
 body section.second_slide .top_section .content.content_8 .evt_level_list li.evt_level_6 .evt_border_color {
   background: conic-gradient(from 120deg at center center, rgba(255, 159, 202, 0), rgba(255, 159, 186, 0), rgba(147, 21, 57, 0.46), #FF9FBA);
-}
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 body section.second_slide .top_section .content.network_group {
   width: 460px;
@@ -665,14 +641,6 @@ body section.second_slide .top_section .content.network_group .network_area .cub
   filter: blur(30px);
   box-shadow: 0 0 220px rgba(0, 134, 209, 0.1), 0 0 300px rgba(0, 134, 209, 0.2), 0 0 400px rgba(0, 134, 209, 0.3);
 }
-@keyframes rotateCube {
-  0% {
-    transform: rotateX(-30deg) rotateY(0deg);
-  }
-  100% {
-    transform: rotateX(-30deg) rotateY(360deg);
-  }
-}
 body section.second_slide .top_section .content.network_group .network_area .arrow {
   position: relative;
   display: flex;
@@ -681,14 +649,6 @@ body section.second_slide .top_section .content.network_group .network_area .arr
   width: 81px;
   height: 57px;
   margin-left: 10px;
-}
-@keyframes loading {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 body section.second_slide .top_section .content.network_group .network_area .arrow li {
   background: url(../img/arrow.png) no-repeat center center;
