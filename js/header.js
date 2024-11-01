@@ -32,38 +32,46 @@ document.addEventListener("DOMContentLoaded", function () {
     updateTime(); // 페이지 로드 시 시간 갱신
 
     document.querySelectorAll('.refresh_btn').forEach(function (element) {
-        element.addEventListener('click', function () {
-            this.classList.toggle('active');
+        element.addEventListener('click', refreshContent);
 
-            // 모든 slide 클래스를 가진 요소 가져오기
-            var refreshElements = document.getElementsByClassName('slide');
-
-            // 동일한 URL로 데이터를 받아와서 새로고침할 영역을 업데이트
-            fetch(window.location.href)
-                .then(function (response) {
-                    return response.text(); // 응답을 텍스트로 반환
-                })
-                .then(function (html) {
-                    // 임시로 DOM을 생성하여 받아온 HTML을 파싱
-                    var tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = html;
-
-                    // 새로 가져온 slide 콘텐츠
-                    var newContent = tempDiv.getElementsByClassName('slide');
-
-                    // 기존 slide 콘텐츠를 새로고침
-                    for (var i = 0; i < refreshElements.length; i++) {
-                        refreshElements[i].innerHTML = newContent[i].innerHTML;
-                    }
-
-                    // 새로고침 후 차트 다시 생성
-                    renderCharts();  // charts.js에 정의된 차트 생성 함수 호출
-                })
-                .catch(function (error) {
-                    console.warn('문제가 발생했습니다:', error);
-                });
-        });
+        // 30초마다 자동으로 리프레시
+        setInterval(function () {
+            element.click();
+        }, 30000);
     });
+
+    function refreshContent() {
+        this.classList.toggle('active');
+
+        // 모든 slide 클래스를 가진 요소 가져오기
+        var refreshElements = document.getElementsByClassName('slide');
+
+        // 동일한 URL로 데이터를 받아와서 새로고침할 영역을 업데이트
+        fetch(window.location.href)
+            .then(function (response) {
+                return response.text(); // 응답을 텍스트로 반환
+            })
+            .then(function (html) {
+                // 임시로 DOM을 생성하여 받아온 HTML을 파싱
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+
+                // 새로 가져온 slide 콘텐츠
+                var newContent = tempDiv.getElementsByClassName('slide');
+
+                // 기존 slide 콘텐츠를 새로고침
+                for (var i = 0; i < refreshElements.length; i++) {
+                    refreshElements[i].innerHTML = newContent[i].innerHTML;
+                }
+
+                // 새로고침 후 차트 다시 생성
+                renderCharts();  // charts.js에 정의된 차트 생성 함수 호출
+            })
+            .catch(function (error) {
+                console.warn('문제가 발생했습니다:', error);
+            });
+    }
+
 
 
     // 전체 화면 토글 버튼

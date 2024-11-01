@@ -1252,6 +1252,7 @@ body {
   &.dark {
     /*다크테마*/
     background: url(../img/dark/bg.jpg)no-repeat center center;
+    background-size: cover;
     overflow: hidden;
 
     .first_slide {
@@ -1452,6 +1453,7 @@ body {
   &.blue {
     /*블루테마*/
     background: url(../img/blue/bg.jpg)no-repeat center center;
+    background-size: cover;
     overflow: hidden;
 
     .first_slide {

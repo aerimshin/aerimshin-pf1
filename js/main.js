@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var currentIndex = 0;
     var sections = document.querySelectorAll('section');
     var pagerItems = document.querySelectorAll('.pager li');
-    var slideInterval = setInterval(rotateSlides, 20000); // 3초마다 슬라이드 전환
+    var slideInterval = setInterval(rotateSlides, 15000); // 3초마다 슬라이드 전환
 
     // 페이저 클릭 이벤트 설정
     pagerItems.forEach(function (pager, index) {
