@@ -1,19 +1,56 @@
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
 @keyframes spin {
   0% {
-    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
   }
 }
+
+@-webkit-keyframes rotateCube {
+  0% {
+    -webkit-transform: rotateX(-30deg) rotateY(0deg);
+            transform: rotateX(-30deg) rotateY(0deg);
+  }
+  100% {
+    -webkit-transform: rotateX(-30deg) rotateY(360deg);
+            transform: rotateX(-30deg) rotateY(360deg);
+  }
+}
+
 @keyframes rotateCube {
   0% {
-    transform: rotateX(-30deg) rotateY(0deg);
+    -webkit-transform: rotateX(-30deg) rotateY(0deg);
+            transform: rotateX(-30deg) rotateY(0deg);
   }
   100% {
-    transform: rotateX(-30deg) rotateY(360deg);
+    -webkit-transform: rotateX(-30deg) rotateY(360deg);
+            transform: rotateX(-30deg) rotateY(360deg);
   }
 }
+
+@-webkit-keyframes loading {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes loading {
   0% {
     opacity: 0;
@@ -21,4 +58,5 @@
   100% {
     opacity: 1;
   }
-}/*# sourceMappingURL=animation.style.css.map */
+}
+/*# sourceMappingURL=animation.style.css.map */
