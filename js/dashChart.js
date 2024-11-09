@@ -42,6 +42,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     borderRadius: 1
                 }
             },
+            credits: {
+                enabled: false  // Highcharts 로고 및 링크 제거
+            },
             series: [{
                 name: 'CPU Usage',
                 data: [70, 60, 90, 50, 80],
@@ -92,6 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     borderWidth: 0,
                     borderRadius: 1
                 }
+            },
+            credits: {
+                enabled: false  // Highcharts 로고 및 링크 제거
             },
             series: [{
                 name: 'Memory Usage',
