@@ -117,8 +117,8 @@ body {
 
               .button-toggle {
                 display: inline-block;
-                background: lighten(#555, 40%);
-                border-radius: 3px;
+                background: #393633;
+                border-radius: 7.5px;
                 height: 15px;
                 padding: 4px;
                 width: 30px;
@@ -129,10 +129,10 @@ body {
                   position: absolute;
                   left: 4px;
                   right: auto;
-                  width: 13px;
-                  height: 13px;
+                  width: 14px;
+                  height: 14px;
                   background: #fff;
-                  border-radius: 3px;
+                  border-radius: 6.5px;
                   transition: all 0.4s cubic-bezier(0.33, 1.6, 0.66, 1);
                   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
                 }
@@ -149,7 +149,7 @@ body {
 
                 &:checked {
                   &+.button-toggle {
-                    background: lighten(#a21, 30%);
+                    background: #121F4B;
 
                     .handle {
                       left: 20px;
@@ -1248,7 +1248,7 @@ body {
     width: 55px;
     height: 20px;
     border-radius: 10px;
-    background: rgba($color: #fff, $alpha: .3);
+    background: rgba($color: #fff, $alpha: .1);
     backdrop-filter: blur(8px);
     top: 25px;
     left: 50%;
@@ -1264,13 +1264,14 @@ body {
       height: 15px;
       background-color: #fff;
       border-radius: 12.5px;
+      transition: 0.5s;
     }
 
     li {
       width: 15px;
       height: 15px;
       border-radius: 12.5px;
-      background-color: #999;
+      background-color: #444;
       cursor: pointer;
     }
   }

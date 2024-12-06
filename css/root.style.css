@@ -105,8 +105,8 @@ body header .header_item nav.nav_btn ul.nav_btn_list li.theme_toggle {
 }
 body header .header_item nav.nav_btn ul.nav_btn_list li.theme_toggle .button-toggle {
   display: inline-block;
-  background: #bbbbbb;
-  border-radius: 3px;
+  background: #393633;
+  border-radius: 7.5px;
   height: 15px;
   padding: 4px;
   width: 30px;
@@ -117,10 +117,10 @@ body header .header_item nav.nav_btn ul.nav_btn_list li.theme_toggle .button-tog
   position: absolute;
   left: 4px;
   right: auto;
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   background: #fff;
-  border-radius: 3px;
+  border-radius: 6.5px;
   transition: all 0.4s cubic-bezier(0.33, 1.6, 0.66, 1);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
 }
@@ -134,7 +134,7 @@ body header .header_item nav.nav_btn ul.nav_btn_list li.theme_toggle .toggler {
   z-index: 1;
 }
 body header .header_item nav.nav_btn ul.nav_btn_list li.theme_toggle .toggler:checked + .button-toggle {
-  background: #f07464;
+  background: #121F4B;
 }
 body header .header_item nav.nav_btn ul.nav_btn_list li.theme_toggle .toggler:checked + .button-toggle .handle {
   left: 20px;
@@ -950,7 +950,7 @@ body .pager {
   width: 55px;
   height: 20px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
   -webkit-backdrop-filter: blur(8px);
           backdrop-filter: blur(8px);
   top: 25px;
@@ -967,12 +967,13 @@ body .pager li.active {
   height: 15px;
   background-color: #fff;
   border-radius: 12.5px;
+  transition: 0.5s;
 }
 body .pager li {
   width: 15px;
   height: 15px;
   border-radius: 12.5px;
-  background-color: #999;
+  background-color: #444;
   cursor: pointer;
 }
 body.dark {

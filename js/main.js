@@ -2,46 +2,42 @@ document.addEventListener("DOMContentLoaded", function () {
     var currentIndex = 0;
     var sections = document.querySelectorAll('section');
     var pagerItems = document.querySelectorAll('.pager li');
-    var slideInterval = setInterval(rotateSlides, 15000); // 3초마다 슬라이드 전환
+    var slideInterval = setInterval(rotateSlides, 15000); // 15초마다 슬라이드 전환
 
     // 페이저 클릭 이벤트 설정
     pagerItems.forEach(function (pager, index) {
         pager.addEventListener('click', function () {
-            // 현재 슬라이드와 클릭한 슬라이드가 다를 때만 실행
             if (index !== currentIndex) {
                 fadeOut(sections[currentIndex], 1000); // 현재 섹션 페이드 아웃
-                pagerItems[currentIndex].classList.remove('active'); // 현재 활성화된 페이저 비활성화
+                pagerItems[currentIndex].classList.remove('active'); // 현재 페이저 비활성화
 
-                currentIndex = index; // 현재 인덱스를 클릭한 페이저 인덱스로 변경
+                currentIndex = index; // 현재 인덱스를 변경
 
-                fadeIn(sections[currentIndex], 1000); // 클릭한 페이저에 해당하는 섹션 페이드 인
-                pagerItems[currentIndex].classList.add('active'); // 해당 페이저 활성화
+                fadeIn(sections[currentIndex], 1000); // 새 섹션 페이드 인
+                pagerItems[currentIndex].classList.add('active'); // 새 페이저 활성화
             }
         });
     });
 
     function rotateSlides() {
-        fadeOut(sections[currentIndex], 1000); // 현재 섹션 페이드 아웃
-        pagerItems[currentIndex].classList.remove('active'); // 현재 활성화된 페이저 비활성화
+        fadeOut(sections[currentIndex], 1000);
+        pagerItems[currentIndex].classList.remove('active');
 
-        // 다음 섹션 인덱스 계산
         currentIndex = (currentIndex + 1) % sections.length;
 
-        fadeIn(sections[currentIndex], 1000); // 다음 섹션 페이드 인
-        pagerItems[currentIndex].classList.add('active'); // 다음 페이저 활성화
+        fadeIn(sections[currentIndex], 1000);
+        pagerItems[currentIndex].classList.add('active');
     }
 
-    // fadeIn 함수
     function fadeIn(element, duration) {
         element.style.opacity = 0;
-        element.style.display = "flex"; // 요소를 보여주기 위해 display를 block으로 설정
+        element.style.display = "flex"; // 요소를 보여주기 위해 display를 flex로 설정
 
         var startTime = performance.now();
 
         function fade() {
             var currentTime = performance.now();
-            var elapsedTime = currentTime - startTime;
-            var progress = Math.min(elapsedTime / duration, 1);
+            var progress = Math.min((currentTime - startTime) / duration, 1);
             element.style.opacity = progress;
 
             if (progress < 1) {
@@ -52,30 +48,25 @@ document.addEventListener("DOMContentLoaded", function () {
         requestAnimationFrame(fade);
     }
 
-    // fadeOut 함수
     function fadeOut(element, duration) {
-        var opacity = 1;
-        element.style.display = "flex"; // 요소가 페이드 아웃될 때는 먼저 보여주고 페이드 아웃 시작
         var startTime = performance.now();
 
         function fade() {
             var currentTime = performance.now();
-            var elapsedTime = currentTime - startTime;
-            var progress = Math.min(elapsedTime / duration, 1);
+            var progress = Math.min((currentTime - startTime) / duration, 1);
             element.style.opacity = 1 - progress;
 
             if (progress < 1) {
                 requestAnimationFrame(fade);
             } else {
-                element.style.display = "none"; // 페이드 아웃이 완료되면 요소를 숨김
+                element.style.display = "none";
             }
         }
 
         requestAnimationFrame(fade);
     }
 
-
-    //백본 table slide
+    // 백본 테이블 슬라이더 초기화
     function initSlider(sliderClass, slideWidth) {
         var sliders = document.querySelectorAll(sliderClass);
 
@@ -87,51 +78,68 @@ document.addEventListener("DOMContentLoaded", function () {
             var timeout;
 
             function move(newIndex) {
-                if (currentIndex === newIndex) return; // Return if the same index
+                if (currentIndex === newIndex) return;
 
-                advance(); // Reserve automatic transition
+                advance();
 
                 bulletArray[currentIndex].classList.remove("active");
                 bulletArray[newIndex].classList.add("active");
 
-                // Update the transform property to slide
-                slideGroup.style.transform = "translateX(-" + (newIndex * slideWidth) + "px)";
-
-                currentIndex = newIndex; // Update current index
+                slideGroup.style.transform = `translateX(-${newIndex * slideWidth}px)`;
+                currentIndex = newIndex;
             }
 
             function advance() {
                 clearTimeout(timeout);
                 timeout = setTimeout(function () {
-                    var nextIndex = (currentIndex + 1) % slides.length; // Calculate next slide index
-                    move(nextIndex); // Move to the next slide
-                }, 4000); // 4 seconds interval
+                    var nextIndex = (currentIndex + 1) % slides.length;
+                    move(nextIndex);
+                }, 4000); // 4초마다 전환
             }
 
-            // Register click event for each bullet button
             bulletArray.forEach(function (button, index) {
                 button.addEventListener("click", function () {
-                    move(index); // Move to the corresponding slide
+                    move(index);
                 });
             });
 
-            advance(); // Start automatic transition
+            advance();
         });
     }
 
-    // Initialize sliders for both content sections
+    // 슬라이더 초기화
     initSlider(".content_15", 925);
     initSlider(".content_16", 925);
 
-
-    // 시간 업데이트
+    // 날짜 업데이트
     function tableTime() {
         var now = new Date();
         var year = now.getFullYear();
-        var month = String(now.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
+        var month = String(now.getMonth() + 1).padStart(2, '0');
         var day = String(now.getDate()).padStart(2, '0');
 
         var formattedTime = `${year} - ${month} - ${day}`;
-        document.querySelectorAll('.tbl_today').textContent = formattedTime;
+        var tblTodayElements = document.querySelectorAll('.tbl_today');
+
+        tblTodayElements.forEach(function (element) {
+            element.textContent = formattedTime;
+        });
     }
+
+    // 시간 초기화
+    tableTime();
+
+    // 숫자 랜덤으로 뽑기
+    function randomNum() {
+        var randomNumElements = document.querySelectorAll('.randomNum');
+
+        randomNumElements.forEach(function (element) {
+            // 100부터 199 사이의 정수 난수 생성
+            const randomNum = Math.floor(Math.random() * 100) + 150;
+
+            // 해당 요소의 텍스트 콘텐츠 업데이트
+            element.textContent = randomNum + 'MB';
+        });
+    }
+    randomNum();
 });
