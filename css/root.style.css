@@ -46,7 +46,23 @@ body header .header_item {
   align-items: center;
   gap: 35px;
 }
-body header .header_item div.time_text {
+body header .header_item div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  gap: 5px;
+}
+body header .header_item div div.date_text {
+  color: #999;
+  font-size: 18px;
+}
+body header .header_item div div.time_text {
+  color: #999;
+  font-size: 25px;
+  margin-left: 5px;
+}
+body header .header_item div span.am {
   color: #999;
   font-size: 18px;
 }

@@ -124,4 +124,14 @@ document.addEventListener("DOMContentLoaded", function () {
     initSlider(".content_16", 925);
 
 
+    // 시간 업데이트
+    function tableTime() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = String(now.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
+        var day = String(now.getDate()).padStart(2, '0');
+
+        var formattedTime = `${year} - ${month} - ${day}`;
+        document.querySelectorAll('.tbl_today').textContent = formattedTime;
+    }
 });

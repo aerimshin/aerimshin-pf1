@@ -21,12 +21,48 @@ document.addEventListener("DOMContentLoaded", function () {
         var year = now.getFullYear();
         var month = String(now.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
         var day = String(now.getDate()).padStart(2, '0');
-        var hours = String(now.getHours()).padStart(2, '0');
+
+        // 24시간제를 12시간제로 변환
+        var hours = now.getHours();
+        var period = hours >= 12 ? 'PM' : 'AM'; // 오전/오후 설정
+        hours = hours % 12 || 12; // 0시를 12시로 변경
+
         var minutes = String(now.getMinutes()).padStart(2, '0');
 
-        var formattedTime = `${year}.${month}.${day} ${hours}:${minutes}`;
-        document.getElementById('time').textContent = formattedTime;
+        var formattedDate = `${year}.${month}.${day}`;
+        var formattedTime = `${hours}:${minutes}`;
+        var formattedAm = `${period}`;
+
+        // 날짜 업데이트
+        var dateElement = document.getElementById('date');
+        if (dateElement) {
+            dateElement.textContent = formattedDate;
+        } else {
+            console.warn("Date element with ID 'date' not found.");
+        }
+
+        // 시간을 표시하는 클래스가 여러 개일 경우 처리
+        var timeElements = document.getElementsByClassName('time_text');
+        if (timeElements.length > 0) {
+            for (var i = 0; i < timeElements.length; i++) {
+                timeElements[i].textContent = formattedTime;
+            }
+        } else {
+            console.warn("No elements with class 'time_text' found.");
+        }
+
+        // AM/PM을 표시하는 클래스가 여러 개일 경우 처리
+        var amElements = document.getElementsByClassName('am');
+        if (amElements.length > 0) {
+            for (var i = 0; i < amElements.length; i++) {
+                amElements[i].textContent = formattedAm;
+            }
+        } else {
+            console.warn("No elements with class 'am' found.");
+        }
     }
+
+
 
     setInterval(updateTime, 1000);
     updateTime(); // 페이지 로드 시 시간 갱신
