@@ -1674,5 +1674,15 @@ body {
         }
       }
     }
+
+    .pager {
+      li.active {
+        background-color: #fff;
+      }
+
+      li {
+        background-color: #121F4B;
+      }
+    }
   }
 }

@@ -1183,4 +1183,10 @@ body.blue .second_slide div.bottom_section {
 }
 body.blue .second_slide div.bottom_section .content .evt_table table thead {
   color: #ccc;
+}
+body.blue .pager li.active {
+  background-color: #fff;
+}
+body.blue .pager li {
+  background-color: #121F4B;
 }/*# sourceMappingURL=root.style.css.map */
