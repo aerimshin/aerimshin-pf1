@@ -30,3 +30,16 @@
         opacity: 1;
     }
 }
+
+@keyframes downBlink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes downTextBlink {
+    50% {
+        border: 1px solid #E71D52;
+        background: rgba(231, 29, 81, .3);
+    }
+}
