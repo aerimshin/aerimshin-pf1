@@ -465,7 +465,7 @@ body .dashboard section.first_slide div.center_section div.content_4 .company_li
 }
 body .dashboard section.first_slide div.center_section div.content_4 .company_list li.company_2 {
   /*서울*/
-  left: 106px;
+  left: 105px;
   top: 190px;
 }
 body .dashboard section.first_slide div.center_section div.content_4 .company_list li.company_2 .company_icon::after {
