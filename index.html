@@ -8,1097 +8,1103 @@
     <link rel="stylesheet" href="./css/root.style.css">
     <link rel="stylesheet" href="./css/animation.style.css">
     <script src="./js/main.js"></script><!-- 파일연결, 기본 js-->
+    <script src="./js/test.js"></script><!-- 파일연결, 기본 js-->
     <script src="./js/header.js"></script><!-- 헤더연결 js-->
     <script src="./js/dashChart.js"></script><!-- highchart data -->
     <script src="https://code.highcharts.com/highcharts.js"></script><!-- highchart 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- D3 CDN -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
-<body id="all" class="dark">
-
-    <header>
-        <h1>통합 관제 대시보드</h1>
-        <div class="header_item">
-            <div class="">
-                <div id="date" class="date_text"></div>
-                <div id="time" class="time_text"></div>
-                <span class="am"></span>
+<body id="all" class="all dark">
+    <div class="dashboard">
+        <header>
+            <h1>통합 관제 대시보드</h1>
+            <div class="header_item">
+                <div class="">
+                    <div id="date" class="date_text"></div>
+                    <div id="time" class="time_text"></div>
+                    <span class="am"></span>
+                </div>
+                <nav class="nav_btn">
+                    <ul class="nav_btn_list">
+                        <li class="theme_toggle" title="테마전환"><!-- 테마 토글버튼-->
+                            <input id="checkbox" class="toggler" type="checkbox" data-toggle="button-toggle" />
+                            <div class="button-toggle">
+                                <div class="handle">
+                                    <div class="bars"></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li id="refresh" class="refresh_btn" title="새로고침"></li>
+                        <li id="expand" class="expand_btn" title="확대/축소"></li>
+                        <!-- <li class="set_btn"></li>ß -->
+                    </ul>
+                </nav>
             </div>
-            <nav class="nav_btn">
-                <ul class="nav_btn_list">
-                    <li class="theme_toggle" title="테마전환"><!-- 테마 토글버튼-->
-                        <input id="checkbox" class="toggler" type="checkbox" data-toggle="button-toggle" />
-                        <div class="button-toggle">
-                            <div class="handle">
-                                <div class="bars"></div>
+            <ul class="pager">
+                <li class="active"></li>
+                <li></li>
+            </ul>
+        </header>
+
+        <section class="slide first_slide">
+            <div class="left_section">
+                <div id="evtLevelControl" class="content content_1">
+                    <h2 class="content_name">장애현황</h2>
+                    <ul class="evt_level_list">
+                        <li class="evt_level_1">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">130</span>
+                                <span class="evt_name">Down</span>
+                            </div>
+                        </li>
+                        <li class="evt_level_2">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">2</span>
+                                <span class="evt_name">Critical</span>
+                            </div>
+                        </li>
+                        <li class="evt_level_3">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">10</span>
+                                <span class="evt_name">Major</span>
+                            </div>
+                        </li>
+                        <li class="evt_level_4">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">56</span>
+                                <span class="evt_name">Minor</span>
+                            </div>
+                        </li>
+                        <li class="evt_level_5">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">2</span>
+                                <span class="evt_name">Warning</span>
+                            </div>
+                        </li>
+                        <li class="evt_level_6">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">0</span>
+                                <span class="evt_name">Info</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="nmsCpu" class="content content_2">
+                    <h2 class="content_name">CPU Top5 (%)</h2>
+                    <div id="cpuChart"></div><!-- high chart 영역-->
+                </div>
+                <div id="nmsMem" class="content content_3">
+                    <h2 class="content_name">Memory Top5 (%)</h2>
+                    <div id="memChart"></div><!-- high chart 영역-->
+                </div>
+            </div>
+
+
+            <div class="center_section">
+                <div id="topoControl" class="content content_4 ">
+                    <ul class="company_list">
+                        <li class="company_1">
+                            <div class="company_icon"></div>
+                            <span class="company_name">경기광역본부</span>
+                        </li>
+                        <li class="company_2">
+                            <div class="company_icon"></div>
+                            <span class="company_name">서울광역본부</span>
+                        </li>
+                        <li class="company_3">
+                            <div class="company_icon"></div>
+                            <span class="company_name">강원광역본부</span>
+                        </li>
+                        <li class="company_4">
+                            <div class="company_icon"></div>
+                            <span class="company_name">대전광역본부</span>
+                        </li>
+                        <li class="company_5">
+                            <div class="company_icon"></div>
+                            <span class="company_name">대구광역본부</span>
+                        </li>
+                        <li class="company_6">
+                            <div class="company_icon"></div>
+                            <span class="company_name">광주광역본부</span>
+                        </li>
+                        <li class="company_7">
+                            <div class="company_icon"></div>
+                            <span class="company_name">부산광역본부</span>
+                        </li>
+                        <li class="company_8">
+                            <div class="company_icon"></div>
+                            <span class="company_name">제주본사</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="right_section">
+                <div id="internetControl" class="content content_5">
+                    <h2 class="content_name">인터넷 사용량</h2>
+                    <ul class="chart_color">
+                        <li>금일 사용량</li>
+                        <li>역대 사용량</li>
+                    </ul>
+                    <div class="internet_data">
+                        <ul class="internet_data_list">
+                            <li>
+                                <span>금일</span>
+                                <span class="tbl_today"></span>
+                            </li>
+                            <li>
+                                <span>IN</span>
+                                <span>294.66M</span>
+                            </li>
+                            <li>
+                                <span>OUT</span>
+                                <span>1.8G</span>
+                            </li>
+                            <li>
+                                <span>역대 최고일</span>
+                                <span>2024 - 06 - 28</span>
+                            </li>
+                            <li>
+                                <span>IN</span>
+                                <span>359.06 M</span>
+                            </li>
+                            <li>
+                                <span>OUT</span>
+                                <span>3G</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="internetChart1" class="chart_area"></div><!-- high chart 영역-->
+                </div>
+                <div id="trafficControl" class="content content_6">
+                    <h2 class="content_name">인터넷 트래픽 사용량</h2>
+                    <ul class="chart_color">
+                        <li>금일 사용량</li>
+                        <li>역대 사용량</li>
+                    </ul>
+                    <div class="internet_data">
+                        <ul class="internet_data_list">
+                            <li>
+                                <span>금일</span>
+                                <span class="tbl_today"></span>
+                            </li>
+                            <li>
+                                <span>IN</span>
+                                <span>294.66M</span>
+                            </li>
+                            <li>
+                                <span>OUT</span>
+                                <span>1.8G</span>
+                            </li>
+                            <li>
+                                <span>역대 최고일</span>
+                                <span>2024 - 06 - 28</span>
+                            </li>
+                            <li>
+                                <span>IN</span>
+                                <span>359.06 M</span>
+                            </li>
+                            <li>
+                                <span>OUT</span>
+                                <span>3G</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="internetChart2" class="chart_area"></div><!-- high chart 영역-->
+                </div>
+            </div>
+            <div class="bottom_section">
+                <div id="evtControl" class="content content_7">
+                    <h2 class="content_name">통합이벤트 현황</h2>
+                    <div class="evt_table">
+                        <table>
+                            <colgroup>
+                                <col width="10%" />
+                                <col width="5%" />
+                                <col width="15%" />
+                                <col width="10%" />
+                                <col width="12.5%" />
+                                <col width="12.5%" />
+                                <col width="25%" />
+                                <col width="10%" />
+                            </colgroup>
+                            <thead>
+                                <th>발생일시</th>
+                                <th>이벤트 등급</th>
+                                <th>이벤트 명</th>
+                                <th>그룹</th>
+                                <th>회선명</th>
+                                <th>호스트 IP</th>
+                                <th>이벤트 정보</th>
+                                <th>지속시간</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="tbl_today">2024-07-25</td>
+                                    <td class="evt_table_level">Down</td>
+                                    <td>Agent 응답상태 - Down</td>
+                                    <td>TTA</td>
+                                    <td>SeverGroup_#1</td>
+                                    <td>211.253.243.110</td>
+                                    <td>TTA HP - UX 11.31(Itanium) [211.253.243.110]</td>
+                                    <td>1일 13시 31분</td>
+                                </tr>
+                                <tr>
+                                    <td class="tbl_today">2024-07-25</td>
+                                    <td class="evt_table_level">Critical</td>
+                                    <td>Agent 응답상태 - Critical</td>
+                                    <td>Admin</td>
+                                    <td>SeverGroup_#2</td>
+                                    <td>198.172.243.110</td>
+                                    <td>DESKTOP - FG5G3LE [192.168.0.174]</td>
+                                    <td>17일 13시 31분</td>
+                                </tr>
+                                <tr>
+                                    <td class="tbl_today">2024-07-25</td>
+                                    <td class="evt_table_level">Major</td>
+                                    <td>Test 서버전송 - Major</td>
+                                    <td>Admin Server</td>
+                                    <td>SeverGroup_#4</td>
+                                    <td>222.231.243.176</td>
+                                    <td>##DB서버 (8Core, 클라우드)## - 171사내 PC1 [222.231.243.176]</td>
+                                    <td>13일 13시 31분</td>
+                                </tr>
+                                <tr>
+                                    <td class="tbl_today">2024-07-25</td>
+                                    <td class="evt_table_level">Info</td>
+                                    <td>Test 서버전송 - Info</td>
+                                    <td>Internet Service</td>
+                                    <td>SeverGroup_#4</td>
+                                    <td>196.253.222.110</td>
+                                    <td>TTA HP - UX 11.31(Itanium) [196.253.222.110]</td>
+                                    <td>8일 13시 31분</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="slide second_slide">
+            <div class="top_section">
+                <div id="evtLevelControl" class="content content_8">
+                    <h2 class="content_name">장애현황</h2>
+                    <ul class="evt_level_list">
+                        <li class="evt_level_1">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">130</span>
+                                <span class="evt_name">Down</span>
+                            </div>
+                        </li>
+                        <li class="evt_level_2">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">2</span>
+                                <span class="evt_name">Critical</span>
+                            </div>
+                        </li>
+                        <li class="evt_level_3">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">10</span>
+                                <span class="evt_name">Major</span>
+                            </div>
+                        </li>
+                        <li class="evt_level_4">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">56</span>
+                                <span class="evt_name">Minor</span>
+                            </div>
+                        </li>
+                        <li class="evt_level_5">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">2</span>
+                                <span class="evt_name">Warning</span>
+                            </div>
+                        </li>
+                        <li class="evt_level_6">
+                            <div class="evt_border_color"></div>
+                            <div class="evt_data">
+                                <span class="evt_num">0</span>
+                                <span class="evt_name">Info</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="content network_group content_9">
+                    <h2 class="content_name">네트워크 그룹1</h2>
+                    <div class="network_area">
+                        <div class="cube">
+                            <div class="top"></div>
+                            <div class="lateral">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
                             </div>
                         </div>
-                    </li>
-                    <li id="refresh" class="refresh_btn" title="새로고침"></li>
-                    <li id="expand" class="expand_btn" title="확대/축소"></li>
-                    <!-- <li class="set_btn"></li>ß -->
-                </ul>
-            </nav>
-        </div>
-    </header>
+                        <ol class="arrow">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ol>
+                        <ul class="network_num">
+                            <li>
+                                <span>장비수</span>
+                                <div class="">120</div>
+                            </li>
+                            <li>
+                                <span>장애수</span>
+                                <div class="">0</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content network_group content_10">
+                    <h2 class="content_name">네트워크 그룹4</h2>
+                    <div class="network_area">
+                        <div class="cube">
+                            <div class="top"></div>
+                            <div class="lateral">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <ol class="arrow">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ol>
+                        <ul class="network_num">
+                            <li>
+                                <span>장비수</span>
+                                <div class="">93</div>
+                            </li>
+                            <li>
+                                <span>장애수</span>
+                                <div class="">14</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content network_group content_11">
+                    <h2 class="content_name">네트워크 그룹2</h2>
+                    <div class="network_area">
+                        <div class="cube">
+                            <div class="top"></div>
+                            <div class="lateral">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <ol class="arrow">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ol>
+                        <ul class="network_num">
+                            <li>
+                                <span>장비수</span>
+                                <div class="">318</div>
+                            </li>
+                            <li>
+                                <span>장애수</span>
+                                <div class="">7</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content network_group content_12">
+                    <h2 class="content_name">네트워크 그룹5</h2>
+                    <div class="network_area">
+                        <div class="cube">
+                            <div class="top"></div>
+                            <div class="lateral">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <ol class="arrow">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ol>
+                        <ul class="network_num">
+                            <li>
+                                <span>장비수</span>
+                                <div class="">16</div>
+                            </li>
+                            <li>
+                                <span>장애수</span>
+                                <div class="">1</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content network_group content_13">
+                    <h2 class="content_name">네트워크 그룹3</h2>
+                    <div class="network_area">
+                        <div class="cube">
+                            <div class="top"></div>
+                            <div class="lateral">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <ol class="arrow">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ol>
+                        <ul class="network_num">
+                            <li>
+                                <span>장비수</span>
+                                <div class="">72</div>
+                            </li>
+                            <li>
+                                <span>장애수</span>
+                                <div class="">0</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content network_group content_14">
+                    <h2 class="content_name">네트워크 그룹6</h2>
+                    <div class="network_area">
+                        <div class="cube">
+                            <div class="top"></div>
+                            <div class="lateral">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <ol class="arrow">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ol>
+                        <ul class="network_num">
+                            <li>
+                                <span>장비수</span>
+                                <div>29</div>
+                            </li>
+                            <li>
+                                <span>장애수</span>
+                                <div>0</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="middle_section">
+                <div class="content cart_table content_15">
+                    <h2 class="content_name">백본1 주요회선</h2>
+                    <ul class="tab_pager">
+                        <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                    </ul>
+                    <div class="backbone_table_list">
+                        <table class="backbone_table">
+                            <colgroup>
+                                <col width="5%" />
+                                <col width="25%" />
+                                <col width="20%" />
+                                <col width="15%" />
+                                <col width="15%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                            </colgroup>
+                            <thead>
+                                <th>NO</th>
+                                <th>구분</th>
+                                <th>회선명</th>
+                                <th>수신</th>
+                                <th>송신</th>
+                                <th>collision</th>
+                                <th>CRC</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>TEST 1</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>TEST 2</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>TEST 3</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>TEST 4</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>TEST 5</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>TEST 6</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="backbone_table">
+                            <colgroup>
+                                <col width="5%" />
+                                <col width="25%" />
+                                <col width="20%" />
+                                <col width="15%" />
+                                <col width="15%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                            </colgroup>
+                            <thead>
+                                <th>NO</th>
+                                <th>구분</th>
+                                <th>회선명</th>
+                                <th>수신</th>
+                                <th>송신</th>
+                                <th>collision</th>
+                                <th>CRC</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>TEST 7</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>TEST 8</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>TEST 9</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>TEST 10</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>TEST 11</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>TEST 12</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="backbone_table">
+                            <colgroup>
+                                <col width="5%" />
+                                <col width="25%" />
+                                <col width="20%" />
+                                <col width="15%" />
+                                <col width="15%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                            </colgroup>
+                            <thead>
+                                <th>NO</th>
+                                <th>구분</th>
+                                <th>회선명</th>
+                                <th>수신</th>
+                                <th>송신</th>
+                                <th>collision</th>
+                                <th>CRC</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>TEST 13</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>TEST 14</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>TEST 15</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>TEST 16</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>TEST 17</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>TEST 18</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content cart_table content_16">
+                    <h2 class="content_name">백본2 주요회선</h2>
+                    <ul class="tab_pager">
+                        <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                    </ul>
+                    <div class="backbone_table_list">
+                        <table class="backbone_table">
+                            <colgroup>
+                                <col width="5%" />
+                                <col width="25%" />
+                                <col width="20%" />
+                                <col width="15%" />
+                                <col width="15%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                            </colgroup>
+                            <thead>
+                                <th>NO</th>
+                                <th>구분</th>
+                                <th>회선명</th>
+                                <th>수신</th>
+                                <th>송신</th>
+                                <th>collision</th>
+                                <th>CRC</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>TEST 1</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>TEST 2</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>TEST 3</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>TEST 4</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>TEST 5</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>TEST 6</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="backbone_table">
+                            <colgroup>
+                                <col width="5%" />
+                                <col width="25%" />
+                                <col width="20%" />
+                                <col width="15%" />
+                                <col width="15%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                            </colgroup>
+                            <thead>
+                                <th>NO</th>
+                                <th>구분</th>
+                                <th>회선명</th>
+                                <th>수신</th>
+                                <th>송신</th>
+                                <th>collision</th>
+                                <th>CRC</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>TEST 7</td>
+                                    <td>Gi1/0/21</td>
+                                    <td>204MB</td>
+                                    <td>123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>TEST 8</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>TEST 9</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>TEST 10</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>TEST 11</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>TEST 12</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="backbone_table">
+                            <colgroup>
+                                <col width="5%" />
+                                <col width="25%" />
+                                <col width="20%" />
+                                <col width="15%" />
+                                <col width="15%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                            </colgroup>
+                            <thead>
+                                <th>NO</th>
+                                <th>구분</th>
+                                <th>회선명</th>
+                                <th>수신</th>
+                                <th>송신</th>
+                                <th>collision</th>
+                                <th>CRC</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>TEST 13</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>TEST 14</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>TEST 15</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>TEST 16</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>TEST 17</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>TEST 18</td>
+                                    <td>Gi1/0/21</td>
+                                    <td class="randomNum">204MB</td>
+                                    <td class="randomNum">123MB</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content cart_content content_17">
+                    <h2 class="content_name">백본1 전용회선</h2>
+                    <ul class="chart_color">
+                        <li>IN</li>
+                        <li>OUT</li>
+                    </ul>
+                    <div id="backboneChart1" class="backbone_chart"></div><!--high chart-->
+                </div>
+                <div class="content cart_content content_18">
+                    <h2 class="content_name">백본2 전용회선</h2>
+                    <ul class="chart_color">
+                        <li>IN</li>
+                        <li>OUT</li>
+                    </ul>
+                    <div id="backboneChart2" class="backbone_chart"></div><!--high chart-->
+                </div>
+            </div>
+            <div class="bottom_section">
+                <div id="evtControl" class="content content_19">
+                    <h2 class="content_name">통합이벤트 현황</h2>
+                    <div class="evt_table">
+                        <table>
+                            <colgroup>
+                                <col width="10%" />
+                                <col width="5%" />
+                                <col width="15%" />
+                                <col width="10%" />
+                                <col width="12.5%" />
+                                <col width="12.5%" />
+                                <col width="25%" />
+                                <col width="10%" />
+                            </colgroup>
+                            <thead>
+                                <th>발생일시</th>
+                                <th>이벤트 등급</th>
+                                <th>이벤트 명</th>
+                                <th>그룹</th>
+                                <th>회선명</th>
+                                <th>호스트 IP</th>
+                                <th>이벤트 정보</th>
+                                <th>지속시간</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="tbl_today">2024-07-25</td>
+                                    <td class="evt_table_level">Down</td>
+                                    <td>Agent 응답상태 - Down</td>
+                                    <td>TTA</td>
+                                    <td>SeverGroup_#1</td>
+                                    <td>211.253.243.110</td>
+                                    <td>TTA HP - UX 11.31(Itanium) [211.253.243.110]</td>
+                                    <td>1일 13시 31분</td>
+                                </tr>
+                                <tr>
+                                    <td class="tbl_today">2024-07-25</td>
+                                    <td class="evt_table_level">Critical</td>
+                                    <td>Agent 응답상태 - Critical</td>
+                                    <td>Admin</td>
+                                    <td>SeverGroup_#2</td>
+                                    <td>198.172.243.110</td>
+                                    <td>DESKTOP - FG5G3LE [192.168.0.174]</td>
+                                    <td>17일 13시 31분</td>
+                                </tr>
+                                <tr>
+                                    <td class="tbl_today">2024-07-25</td>
+                                    <td class="evt_table_level">Major</td>
+                                    <td>Test 서버전송 - Major</td>
+                                    <td>Admin Server</td>
+                                    <td>SeverGroup_#4</td>
+                                    <td>222.231.243.176</td>
+                                    <td>##DB서버 (8Core, 클라우드)## - 171사내 PC1 [222.231.243.176]</td>
+                                    <td>13일 13시 31분</td>
+                                </tr>
+                                <tr>
+                                    <td class="tbl_today">2024-07-25</td>
+                                    <td class="evt_table_level">Info</td>
+                                    <td>Test 서버전송 - Info</td>
+                                    <td>Internet Service</td>
+                                    <td>SeverGroup_#4</td>
+                                    <td>196.253.222.110</td>
+                                    <td>TTA HP - UX 11.31(Itanium) [196.253.222.110]</td>
+                                    <td>8일 13시 31분</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section class="slide first_slide">
-        <div class="left_section">
-            <div id="evtLevelControl" class="content content_1">
-                <h2 class="content_name">장애현황</h2>
-                <ul class="evt_level_list">
-                    <li class="evt_level_1">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">130</span>
-                            <span class="evt_name">Down</span>
-                        </div>
-                    </li>
-                    <li class="evt_level_2">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">2</span>
-                            <span class="evt_name">Critical</span>
-                        </div>
-                    </li>
-                    <li class="evt_level_3">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">10</span>
-                            <span class="evt_name">Major</span>
-                        </div>
-                    </li>
-                    <li class="evt_level_4">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">56</span>
-                            <span class="evt_name">Minor</span>
-                        </div>
-                    </li>
-                    <li class="evt_level_5">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">2</span>
-                            <span class="evt_name">Warning</span>
-                        </div>
-                    </li>
-                    <li class="evt_level_6">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">0</span>
-                            <span class="evt_name">Info</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div id="nmsCpu" class="content content_2">
-                <h2 class="content_name">CPU Top5 (%)</h2>
-                <div id="cpuChart"></div><!-- high chart 영역-->
-            </div>
-            <div id="nmsMem" class="content content_3">
-                <h2 class="content_name">Memory Top5 (%)</h2>
-                <div id="memChart"></div><!-- high chart 영역-->
-            </div>
-        </div>
-
-
-        <div class="center_section">
-            <div id="topoControl" class="content content_4 ">
-                <ul class="company_list">
-                    <li class="company_1">
-                        <div class="company_icon"></div>
-                        <span class="company_name">경기광역본부</span>
-                    </li>
-                    <li class="company_2">
-                        <div class="company_icon"></div>
-                        <span class="company_name">서울광역본부</span>
-                    </li>
-                    <li class="company_3">
-                        <div class="company_icon"></div>
-                        <span class="company_name">강원광역본부</span>
-                    </li>
-                    <li class="company_4">
-                        <div class="company_icon"></div>
-                        <span class="company_name">대전광역본부</span>
-                    </li>
-                    <li class="company_5">
-                        <div class="company_icon"></div>
-                        <span class="company_name">대구광역본부</span>
-                    </li>
-                    <li class="company_6">
-                        <div class="company_icon"></div>
-                        <span class="company_name">광주광역본부</span>
-                    </li>
-                    <li class="company_7">
-                        <div class="company_icon"></div>
-                        <span class="company_name">부산광역본부</span>
-                    </li>
-                    <li class="company_8">
-                        <div class="company_icon"></div>
-                        <span class="company_name">제주본사</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="right_section">
-            <div id="internetControl" class="content content_5">
-                <h2 class="content_name">인터넷 사용량</h2>
-                <ul class="chart_color">
-                    <li>금일 사용량</li>
-                    <li>역대 사용량</li>
-                </ul>
-                <div class="internet_data">
-                    <ul class="internet_data_list">
-                        <li>
-                            <span>금일</span>
-                            <span class="tbl_today"></span>
-                        </li>
-                        <li>
-                            <span>IN</span>
-                            <span>294.66M</span>
-                        </li>
-                        <li>
-                            <span>OUT</span>
-                            <span>1.8G</span>
-                        </li>
-                        <li>
-                            <span>역대 최고일</span>
-                            <span>2024 - 06 - 28</span>
-                        </li>
-                        <li>
-                            <span>IN</span>
-                            <span>359.06 M</span>
-                        </li>
-                        <li>
-                            <span>OUT</span>
-                            <span>3G</span>
-                        </li>
-                    </ul>
-                </div>
-                <div id="internetChart1" class="chart_area"></div><!-- high chart 영역-->
-            </div>
-            <div id="trafficControl" class="content content_6">
-                <h2 class="content_name">인터넷 트래픽 사용량</h2>
-                <ul class="chart_color">
-                    <li>금일 사용량</li>
-                    <li>역대 사용량</li>
-                </ul>
-                <div class="internet_data">
-                    <ul class="internet_data_list">
-                        <li>
-                            <span>금일</span>
-                            <span class="tbl_today"></span>
-                        </li>
-                        <li>
-                            <span>IN</span>
-                            <span>294.66M</span>
-                        </li>
-                        <li>
-                            <span>OUT</span>
-                            <span>1.8G</span>
-                        </li>
-                        <li>
-                            <span>역대 최고일</span>
-                            <span>2024 - 06 - 28</span>
-                        </li>
-                        <li>
-                            <span>IN</span>
-                            <span>359.06 M</span>
-                        </li>
-                        <li>
-                            <span>OUT</span>
-                            <span>3G</span>
-                        </li>
-                    </ul>
-                </div>
-                <div id="internetChart2" class="chart_area"></div><!-- high chart 영역-->
-            </div>
-        </div>
-        <div class="bottom_section">
-            <div id="evtControl" class="content content_7">
-                <h2 class="content_name">통합이벤트 현황</h2>
-                <div class="evt_table">
-                    <table>
-                        <colgroup>
-                            <col width="10%" />
-                            <col width="5%" />
-                            <col width="15%" />
-                            <col width="10%" />
-                            <col width="12.5%" />
-                            <col width="12.5%" />
-                            <col width="25%" />
-                            <col width="10%" />
-                        </colgroup>
-                        <thead>
-                            <th>발생일시</th>
-                            <th>이벤트 등급</th>
-                            <th>이벤트 명</th>
-                            <th>그룹</th>
-                            <th>회선명</th>
-                            <th>호스트 IP</th>
-                            <th>이벤트 정보</th>
-                            <th>지속시간</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="tbl_today">2024-07-25</td>
-                                <td class="evt_table_level">Down</td>
-                                <td>Agent 응답상태 - Down</td>
-                                <td>TTA</td>
-                                <td>SeverGroup_#1</td>
-                                <td>211.253.243.110</td>
-                                <td>TTA HP - UX 11.31(Itanium) [211.253.243.110]</td>
-                                <td>1일 13시 31분</td>
-                            </tr>
-                            <tr>
-                                <td class="tbl_today">2024-07-25</td>
-                                <td class="evt_table_level">Critical</td>
-                                <td>Agent 응답상태 - Critical</td>
-                                <td>Admin</td>
-                                <td>SeverGroup_#2</td>
-                                <td>198.172.243.110</td>
-                                <td>DESKTOP - FG5G3LE [192.168.0.174]</td>
-                                <td>17일 13시 31분</td>
-                            </tr>
-                            <tr>
-                                <td class="tbl_today">2024-07-25</td>
-                                <td class="evt_table_level">Major</td>
-                                <td>Test 서버전송 - Major</td>
-                                <td>Admin Server</td>
-                                <td>SeverGroup_#4</td>
-                                <td>222.231.243.176</td>
-                                <td>##DB서버 (8Core, 클라우드)## - 171사내 PC1 [222.231.243.176]</td>
-                                <td>13일 13시 31분</td>
-                            </tr>
-                            <tr>
-                                <td class="tbl_today">2024-07-25</td>
-                                <td class="evt_table_level">Info</td>
-                                <td>Test 서버전송 - Info</td>
-                                <td>Internet Service</td>
-                                <td>SeverGroup_#4</td>
-                                <td>196.253.222.110</td>
-                                <td>TTA HP - UX 11.31(Itanium) [196.253.222.110]</td>
-                                <td>8일 13시 31분</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="slide second_slide">
-        <div class="top_section">
-            <div id="evtLevelControl" class="content content_8">
-                <h2 class="content_name">장애현황</h2>
-                <ul class="evt_level_list">
-                    <li class="evt_level_1">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">130</span>
-                            <span class="evt_name">Down</span>
-                        </div>
-                    </li>
-                    <li class="evt_level_2">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">2</span>
-                            <span class="evt_name">Critical</span>
-                        </div>
-                    </li>
-                    <li class="evt_level_3">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">10</span>
-                            <span class="evt_name">Major</span>
-                        </div>
-                    </li>
-                    <li class="evt_level_4">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">56</span>
-                            <span class="evt_name">Minor</span>
-                        </div>
-                    </li>
-                    <li class="evt_level_5">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">2</span>
-                            <span class="evt_name">Warning</span>
-                        </div>
-                    </li>
-                    <li class="evt_level_6">
-                        <div class="evt_border_color"></div>
-                        <div class="evt_data">
-                            <span class="evt_num">0</span>
-                            <span class="evt_name">Info</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="content network_group content_9">
-                <h2 class="content_name">네트워크 그룹1</h2>
-                <div class="network_area">
-                    <div class="cube">
-                        <div class="top"></div>
-                        <div class="lateral">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <ol class="arrow">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ol>
-                    <ul class="network_num">
-                        <li>
-                            <span>장비수</span>
-                            <div class="">120</div>
-                        </li>
-                        <li>
-                            <span>장애수</span>
-                            <div class="">0</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content network_group content_10">
-                <h2 class="content_name">네트워크 그룹4</h2>
-                <div class="network_area">
-                    <div class="cube">
-                        <div class="top"></div>
-                        <div class="lateral">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <ol class="arrow">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ol>
-                    <ul class="network_num">
-                        <li>
-                            <span>장비수</span>
-                            <div class="">93</div>
-                        </li>
-                        <li>
-                            <span>장애수</span>
-                            <div class="">14</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content network_group content_11">
-                <h2 class="content_name">네트워크 그룹2</h2>
-                <div class="network_area">
-                    <div class="cube">
-                        <div class="top"></div>
-                        <div class="lateral">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <ol class="arrow">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ol>
-                    <ul class="network_num">
-                        <li>
-                            <span>장비수</span>
-                            <div class="">318</div>
-                        </li>
-                        <li>
-                            <span>장애수</span>
-                            <div class="">7</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content network_group content_12">
-                <h2 class="content_name">네트워크 그룹5</h2>
-                <div class="network_area">
-                    <div class="cube">
-                        <div class="top"></div>
-                        <div class="lateral">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <ol class="arrow">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ol>
-                    <ul class="network_num">
-                        <li>
-                            <span>장비수</span>
-                            <div class="">16</div>
-                        </li>
-                        <li>
-                            <span>장애수</span>
-                            <div class="">1</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content network_group content_13">
-                <h2 class="content_name">네트워크 그룹3</h2>
-                <div class="network_area">
-                    <div class="cube">
-                        <div class="top"></div>
-                        <div class="lateral">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <ol class="arrow">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ol>
-                    <ul class="network_num">
-                        <li>
-                            <span>장비수</span>
-                            <div class="">72</div>
-                        </li>
-                        <li>
-                            <span>장애수</span>
-                            <div class="">0</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content network_group content_14">
-                <h2 class="content_name">네트워크 그룹6</h2>
-                <div class="network_area">
-                    <div class="cube">
-                        <div class="top"></div>
-                        <div class="lateral">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <ol class="arrow">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ol>
-                    <ul class="network_num">
-                        <li>
-                            <span>장비수</span>
-                            <div>29</div>
-                        </li>
-                        <li>
-                            <span>장애수</span>
-                            <div>0</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="middle_section">
-            <div class="content cart_table content_15">
-                <h2 class="content_name">백본1 주요회선</h2>
-                <ul class="tab_pager">
-                    <li class="active">1</li>
-                    <li>2</li>
-                    <li>3</li>
-                </ul>
-                <div class="backbone_table_list">
-                    <table class="backbone_table">
-                        <colgroup>
-                            <col width="5%" />
-                            <col width="25%" />
-                            <col width="20%" />
-                            <col width="15%" />
-                            <col width="15%" />
-                            <col width="10%" />
-                            <col width="10%" />
-                        </colgroup>
-                        <thead>
-                            <th>NO</th>
-                            <th>구분</th>
-                            <th>회선명</th>
-                            <th>수신</th>
-                            <th>송신</th>
-                            <th>collision</th>
-                            <th>CRC</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>TEST 1</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>TEST 2</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>TEST 3</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>1</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>TEST 4</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>TEST 5</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>TEST 6</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="backbone_table">
-                        <colgroup>
-                            <col width="5%" />
-                            <col width="25%" />
-                            <col width="20%" />
-                            <col width="15%" />
-                            <col width="15%" />
-                            <col width="10%" />
-                            <col width="10%" />
-                        </colgroup>
-                        <thead>
-                            <th>NO</th>
-                            <th>구분</th>
-                            <th>회선명</th>
-                            <th>수신</th>
-                            <th>송신</th>
-                            <th>collision</th>
-                            <th>CRC</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>TEST 7</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>1</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>TEST 8</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>TEST 9</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>TEST 10</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>TEST 11</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>TEST 12</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="backbone_table">
-                        <colgroup>
-                            <col width="5%" />
-                            <col width="25%" />
-                            <col width="20%" />
-                            <col width="15%" />
-                            <col width="15%" />
-                            <col width="10%" />
-                            <col width="10%" />
-                        </colgroup>
-                        <thead>
-                            <th>NO</th>
-                            <th>구분</th>
-                            <th>회선명</th>
-                            <th>수신</th>
-                            <th>송신</th>
-                            <th>collision</th>
-                            <th>CRC</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>TEST 13</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>TEST 14</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>TEST 15</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>TEST 16</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>TEST 17</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>TEST 18</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>1</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="content cart_table content_16">
-                <h2 class="content_name">백본2 주요회선</h2>
-                <ul class="tab_pager">
-                    <li class="active">1</li>
-                    <li>2</li>
-                    <li>3</li>
-                </ul>
-                <div class="backbone_table_list">
-                    <table class="backbone_table">
-                        <colgroup>
-                            <col width="5%" />
-                            <col width="25%" />
-                            <col width="20%" />
-                            <col width="15%" />
-                            <col width="15%" />
-                            <col width="10%" />
-                            <col width="10%" />
-                        </colgroup>
-                        <thead>
-                            <th>NO</th>
-                            <th>구분</th>
-                            <th>회선명</th>
-                            <th>수신</th>
-                            <th>송신</th>
-                            <th>collision</th>
-                            <th>CRC</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>TEST 1</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>1</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>TEST 2</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>TEST 3</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>TEST 4</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>TEST 5</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>TEST 6</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="backbone_table">
-                        <colgroup>
-                            <col width="5%" />
-                            <col width="25%" />
-                            <col width="20%" />
-                            <col width="15%" />
-                            <col width="15%" />
-                            <col width="10%" />
-                            <col width="10%" />
-                        </colgroup>
-                        <thead>
-                            <th>NO</th>
-                            <th>구분</th>
-                            <th>회선명</th>
-                            <th>수신</th>
-                            <th>송신</th>
-                            <th>collision</th>
-                            <th>CRC</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>TEST 7</td>
-                                <td>Gi1/0/21</td>
-                                <td>204MB</td>
-                                <td>123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>TEST 8</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>TEST 9</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>1</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>TEST 10</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>TEST 11</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>TEST 12</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="backbone_table">
-                        <colgroup>
-                            <col width="5%" />
-                            <col width="25%" />
-                            <col width="20%" />
-                            <col width="15%" />
-                            <col width="15%" />
-                            <col width="10%" />
-                            <col width="10%" />
-                        </colgroup>
-                        <thead>
-                            <th>NO</th>
-                            <th>구분</th>
-                            <th>회선명</th>
-                            <th>수신</th>
-                            <th>송신</th>
-                            <th>collision</th>
-                            <th>CRC</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>TEST 13</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>TEST 14</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>TEST 15</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>TEST 16</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>TEST 17</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>TEST 18</td>
-                                <td>Gi1/0/21</td>
-                                <td class="randomNum">204MB</td>
-                                <td class="randomNum">123MB</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="content cart_content content_17">
-                <h2 class="content_name">백본1 전용회선</h2>
-                <ul class="chart_color">
-                    <li>IN</li>
-                    <li>OUT</li>
-                </ul>
-                <div id="backboneChart1" class="backbone_chart"></div><!--high chart-->
-            </div>
-            <div class="content cart_content content_18">
-                <h2 class="content_name">백본2 전용회선</h2>
-                <ul class="chart_color">
-                    <li>IN</li>
-                    <li>OUT</li>
-                </ul>
-                <div id="backboneChart2" class="backbone_chart"></div><!--high chart-->
-            </div>
-        </div>
-        <div class="bottom_section">
-            <div id="evtControl" class="content content_19">
-                <h2 class="content_name">통합이벤트 현황</h2>
-                <div class="evt_table">
-                    <table>
-                        <colgroup>
-                            <col width="10%" />
-                            <col width="5%" />
-                            <col width="15%" />
-                            <col width="10%" />
-                            <col width="12.5%" />
-                            <col width="12.5%" />
-                            <col width="25%" />
-                            <col width="10%" />
-                        </colgroup>
-                        <thead>
-                            <th>발생일시</th>
-                            <th>이벤트 등급</th>
-                            <th>이벤트 명</th>
-                            <th>그룹</th>
-                            <th>회선명</th>
-                            <th>호스트 IP</th>
-                            <th>이벤트 정보</th>
-                            <th>지속시간</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="tbl_today">2024-07-25</td>
-                                <td class="evt_table_level">Down</td>
-                                <td>Agent 응답상태 - Down</td>
-                                <td>TTA</td>
-                                <td>SeverGroup_#1</td>
-                                <td>211.253.243.110</td>
-                                <td>TTA HP - UX 11.31(Itanium) [211.253.243.110]</td>
-                                <td>1일 13시 31분</td>
-                            </tr>
-                            <tr>
-                                <td class="tbl_today">2024-07-25</td>
-                                <td class="evt_table_level">Critical</td>
-                                <td>Agent 응답상태 - Critical</td>
-                                <td>Admin</td>
-                                <td>SeverGroup_#2</td>
-                                <td>198.172.243.110</td>
-                                <td>DESKTOP - FG5G3LE [192.168.0.174]</td>
-                                <td>17일 13시 31분</td>
-                            </tr>
-                            <tr>
-                                <td class="tbl_today">2024-07-25</td>
-                                <td class="evt_table_level">Major</td>
-                                <td>Test 서버전송 - Major</td>
-                                <td>Admin Server</td>
-                                <td>SeverGroup_#4</td>
-                                <td>222.231.243.176</td>
-                                <td>##DB서버 (8Core, 클라우드)## - 171사내 PC1 [222.231.243.176]</td>
-                                <td>13일 13시 31분</td>
-                            </tr>
-                            <tr>
-                                <td class="tbl_today">2024-07-25</td>
-                                <td class="evt_table_level">Info</td>
-                                <td>Test 서버전송 - Info</td>
-                                <td>Internet Service</td>
-                                <td>SeverGroup_#4</td>
-                                <td>196.253.222.110</td>
-                                <td>TTA HP - UX 11.31(Itanium) [196.253.222.110]</td>
-                                <td>8일 13시 31분</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-    <ul class="pager">
-        <li class="active"></li>
-        <li></li>
-    </ul>
+    </div>
 </body>
 
 </html>
